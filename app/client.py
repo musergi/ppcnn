@@ -1,4 +1,5 @@
 import socket
+import pickle
 import coms
 import tensorflow as tf
 
@@ -11,7 +12,10 @@ if __name__ == "__main__":
     net_json = sock.recv_str()
     model = tf.keras.models.model_from_json(net_json)
     model.summary()
-    sock.send_data(b'[net train results]')
+    weights = pickle.loads(sock.recv_data())
+    model.set_weights(weights)
+    # Train network
+    sock.send_data(pickle.dumps(model.get_weights()))
     if sock.recv_str() == 'OK':
         print('Successful exchange, closing conection')
     else:

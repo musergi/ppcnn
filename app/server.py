@@ -1,5 +1,6 @@
 import socket
 import threading
+import pickle
 import coms
 import nets
 
@@ -8,7 +9,8 @@ def on_connection(clientsocket):
     sock = coms.CustomSocket(clientsocket)
     if sock.recv_str() == 'GETNET':
         sock.send_str(nets.Controller().to_json())
-        print('Training results:', sock.recv_data())
+        sock.send_data(pickle.dumps(nets.Controller().get_weights())) # Serialize and send weight data
+        print('Training results:', len(sock.recv_data()))
         sock.send_str('OK')
 
 
