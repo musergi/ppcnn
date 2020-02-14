@@ -7,7 +7,7 @@ BUFFER_SIZE = 4096
 
 
 class CustomSocket:
-    def __init__(self, socket):
+    def __init__(self, socket: socket.socket):
         self.socket = socket
 
     def send_data(self, data):
