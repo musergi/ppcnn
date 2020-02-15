@@ -13,6 +13,11 @@ def on_connection(clientsocket):
         print('Training results:', len(sock.recv_data()))
         sock.send_str('OK')
 
+def set_weights(self):
+    #Upgrade the cloud weights to get a better model
+    #We could make the average. Look for references
+    return None
+
 
 if __name__ == "__main__":
     nets.Controller().create_network()
