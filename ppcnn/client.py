@@ -1,10 +1,10 @@
 import socket
 import pickle
-import coms
+from ppcnn import coms
 import tensorflow as tf
 
 
-if __name__ == "__main__":
+def run():
     clientsocket = socket.socket()
     clientsocket.connect((socket.gethostname(), coms.PORT))
     sock = coms.CustomSocket(clientsocket)
