@@ -8,9 +8,9 @@ def get_model(sock):
     sock.send_str('GETNET')
     net_json = sock.recv_str()
     model = tf.keras.models.model_from_json(net_json)
-    model.summary()
     weights = pickle.loads(sock.recv_data())
     model.set_weights(weights)
+    model.summary()
     return model
 
 

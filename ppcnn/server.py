@@ -1,8 +1,7 @@
 import socket
 import threading
 import pickle
-import coms
-import nets
+from ppcnn import nets, coms
 
 
 def on_connection(clientsocket):
@@ -10,20 +9,19 @@ def on_connection(clientsocket):
     if sock.recv_str() == 'GETNET':
         sock.send_str(nets.Controller().to_json())
         sock.send_data(pickle.dumps(nets.Controller().get_weights())) # Serialize and send weight data
-        print('Training results:', len(sock.recv_data()))
+        new_weights = pickle.loads(sock.recv_data())
         sock.send_str('OK')
-
-def set_weights(self):
-    #Upgrade the cloud weights to get a better model
-    #We could make the average. Look for references
-    return None
+    elif sock.recv_str() == 'VALNET':
+        print('Load validation dataset and print result')
 
 
-if __name__ == "__main__":
+def run():
     nets.Controller().create_network()
+
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serversocket.bind((socket.gethostname(), 4000))
+    serversocket.bind((socket.gethostname(), coms.PORT))
     serversocket.listen(5)
+
     while True:
-        (clientsocket, address) = serversocket.accept()
+        (clientsocket, _) = serversocket.accept()
         threading.Thread(target=lambda: on_connection(clientsocket), daemon=True).start()
