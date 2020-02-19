@@ -16,13 +16,6 @@ def on_connection(clientsocket):
         print('Load validation dataset and print result')
     return new_weights
 
-#No se com fer això: el que vull es actualitzar correctament els pesos
-def update_weights (new_weights):
-    for delta_weights in weights:
-        delta_weights -= new_weights
-        return delta_weights
-
-
 
 def run():
     nets.Controller().create_network()
