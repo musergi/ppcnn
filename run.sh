@@ -32,3 +32,8 @@ done
 # Read address from file
 SERVER_ADDRESS = `cat $SERVER_INIT_FILE`
 
+# Run client on guest nodes
+
+# Active wait for only server pid
+
+# Kill server

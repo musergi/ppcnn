@@ -3,13 +3,12 @@ import threading
 import pickle
 from ppcnn import nets, coms
 
-weights = nets.Controller().get_weights()
 
 def on_connection(clientsocket):
     sock = coms.CustomSocket(clientsocket)
     if sock.recv_str() == 'GETNET':
         sock.send_str(nets.Controller().to_json())
-        sock.send_data(pickle.dumps(weights)) # Serialize and send weight data
+        sock.send_data(pickle.dumps(nets.Controller().get_weights())) # Serialize and send weight data
         new_weights = pickle.loads(sock.recv_data())
         sock.send_str('OK')
     elif sock.recv_str() == 'VALNET':

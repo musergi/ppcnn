@@ -13,12 +13,6 @@ def get_model(sock):
     model.summary()
     return model
 
-#No se com fer això: el que vull es actualitzar correctament els pesos
-def update_weights (new_weights):
-    for delta_weights in weights:
-        delta_weights -= new_weights
-        return delta_weights
-
 def run():
     clientsocket = socket.socket()
     clientsocket.connect((socket.gethostname(), coms.PORT))

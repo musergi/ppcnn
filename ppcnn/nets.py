@@ -17,6 +17,8 @@ class Controller(object):
     def get_weights(self):
         return self.network.get_weights()
 
+    def set_weights(self, weights):
+        self.network.set_weights(weights)
 
 class NetworkMonitor:
     def __init__(self):
@@ -42,10 +44,28 @@ class NetworkMonitor:
             weights = self.model.get_weights()
         return weights
 
-    
+    def set_weights(self, weights):
+        with self._lock:
+            self.model.set_weights(weights)
+        
+
+#No se com fer això: el que vull es actualitzar correctament els pesos
+def calculate_gradient(initial_weights, final_weights):
+    delta = list()
+    for initial_weight, final_weight in zip(initial_weights, final_weights):
+        delta.append(final_weight - initial_weight)
+    return delta
+
+
+def apply_gradient(weights, gradients):
+    result = list()
+    for weight, gradient in zip(weights, gradients):
+        result.append(weight + gradient)
+    return result
 
 
 if __name__ == "__main__":
-    c = Controller()
-    c.create_network()
-    c.get_weights()
+    import numpy as np
+    initial = [np.array([1, 2, 3])]
+    final = [np.array([1, 1, 1])]
+    print(calculate_gradient(initial, final))
