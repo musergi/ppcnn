@@ -63,8 +63,16 @@ def apply_gradient(weights, gradients):
     return result
 
 #Save the dataset to a file
-def save_to_file ():
-    return None
+
+def save_to_file(filepath):
+    dataset = tf.keras.Sequential.Save(filepath, save_format='h5')
+    return dataset
+
+
+def evaluate_dataset(validation_data):
+    dataset = tf.keras.models.load_model()
+    return tf.keras.model.evaluate(dataset, validation_data)
+
 
 if __name__ == "__main__":
     import numpy as np
