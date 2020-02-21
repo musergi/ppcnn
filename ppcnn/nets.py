@@ -49,7 +49,6 @@ class NetworkMonitor:
             self.model.set_weights(weights)
         
 
-#No se com fer això: el que vull es actualitzar correctament els pesos
 def calculate_gradient(initial_weights, final_weights):
     delta = list()
     for initial_weight, final_weight in zip(initial_weights, final_weights):
@@ -63,6 +62,9 @@ def apply_gradient(weights, gradients):
         result.append(weight + gradient)
     return result
 
+#Save the dataset to a file
+def save_to_file ():
+    return None
 
 if __name__ == "__main__":
     import numpy as np
