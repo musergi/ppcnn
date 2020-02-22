@@ -6,4 +6,12 @@
 #SBATCH --error=/scratch/nas/4/norma/.log/stderr-%j.out
 #SBATCH --wait-all-nodes=1
 
-echo $HOSTNAME
+echo Host name: $HOSTNAME
+
+CHILD_HOSTNAMES = ()
+for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
+    if ["$HOSTNAME" != "$node"] ; then
+        $CHILD_HOSTNAMES += ($node)
+    fi
+done
+echo $CHILD_HOSTNAMES
