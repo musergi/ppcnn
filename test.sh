@@ -10,7 +10,7 @@ echo Host name: $HOSTNAME
 
 CHILD_HOSTNAMES=""
 for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
-    if ["$HOSTNAME" == "$node"] ; then
+    if ["$HOSTNAME" = "$node"] ; then
     #    CHILD_HOSTNAMES="$CHILD_HOSTNAMES $node"
         echo hostnode
     else
