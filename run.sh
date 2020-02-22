@@ -33,7 +33,7 @@ done
 SERVER_ADDRESS = `cat $SERVER_INIT_FILE`
 
 # Run client on guest nodes
-clients_running = list()
+CLIENTS_RUNNING = ()
 NUMBER_OF_CLIENTS = 0
 for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
     if ["$HOSTNAME" != "$node"] ; then
@@ -50,4 +50,4 @@ for client in clients_running
         #AVISAR AL SERVER
 
 # Kill server
-$PYTHON Kill
+kill $SERVER_JOB_PID
