@@ -11,11 +11,8 @@ echo Host name: $HOSTNAME
 CHILD_HOSTNAMES=()
 for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
     if ["$HOSTNAME" != "$node"] ; then
-        $CHILD_HOSTNAMES+=($node)
+        $CHILD_HOSTNAMES+=("$node")
     fi
 done
 
-echo Child name:
-for name in $CHILD_HOSTNAMES; do
-    echo $name
-done
+echo Child names: ${CHILD_HOSTNAMES[@]}
