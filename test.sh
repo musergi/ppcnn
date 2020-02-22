@@ -14,4 +14,8 @@ for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
         $CHILD_HOSTNAMES += ($node)
     fi
 done
-echo $CHILD_HOSTNAMES
+
+echo Child name:
+for name in $CHILD_HOSTNAMES; do
+    echo $name
+done
