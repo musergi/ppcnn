@@ -12,9 +12,9 @@ SERVER_INIT_FILE=.sync/server_ready.out
 
 # Search for host node and start server on it
 for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
-    if ["$HOSTNAME" = "$node"] ; then
+    #if ["$HOSTNAME" = "$node"] ; then
         $PYTHON -m ppcnn --server &
-    fi
+    #fi
 done
 
 # Save server process id
@@ -22,7 +22,7 @@ SERVER_JOB_PID=`jobs -p`
 
 # Wait for server to initialize
 SERVER_INIT = 0
-while [$SERVER_INIT -e 0]
+while [$SERVER_INIT -eq 0]
 do
     if test -f "$SERVER_INIT_FILE"; then
         $SERVER_INIT = 1
@@ -34,10 +34,9 @@ SERVER_ADDRESS = `cat $SERVER_INIT_FILE`
 
 # Run client on guest nodes
 CLIENT_PIDS=""
-NUMBER_OF_CLIENTS = 0
 for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
     if ["$HOSTNAME" != "$node"] ; then
-        client_running = $PYTHON srun 
+        srun 
         CLIENT_PIDS="$CLIENT_PIDS $!"
     fi
 done
