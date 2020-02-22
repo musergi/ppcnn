@@ -1,5 +1,5 @@
 import argparse
-from ppcnn import client
+from ppcnn import client, server
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -9,6 +9,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.server:
-        print('Running server')
+        server.run()
     else:
-        client.run()
+        client.run(args.address, args.target)

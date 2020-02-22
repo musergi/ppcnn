@@ -13,9 +13,9 @@ def get_model(sock):
     model.summary()
     return model
 
-def run():
+def run(address, target):
     clientsocket = socket.socket()
-    clientsocket.connect((socket.gethostname(), coms.PORT))
+    clientsocket.connect((address, coms.PORT))
     sock = coms.CustomSocket(clientsocket)
     
     model = get_model(sock)

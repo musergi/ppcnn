@@ -3,6 +3,7 @@ import threading
 import pickle
 from ppcnn import nets, coms
 
+SERVER_INIT_FILE = '.sync/server_ready.out'
 
 def on_connection(clientsocket):
     sock = coms.CustomSocket(clientsocket)
@@ -22,6 +23,10 @@ def run():
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serversocket.bind((socket.gethostname(), coms.PORT))
     serversocket.listen(5)
+    
+    #create file where we will write the ip
+    with open(SERVER_INIT_FILE, 'w') as f:
+        f.write(socket.gethostname()) 
 
     while True:
         (clientsocket, _) = serversocket.accept()
