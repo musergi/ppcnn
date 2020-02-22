@@ -33,21 +33,17 @@ done
 SERVER_ADDRESS = `cat $SERVER_INIT_FILE`
 
 # Run client on guest nodes
-CLIENTS_RUNNING = ()
+CLIENT_PIDS=""
 NUMBER_OF_CLIENTS = 0
 for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
     if ["$HOSTNAME" != "$node"] ; then
         client_running = $PYTHON srun 
-        clients_running.append(client_running)
+        CLIENT_PIDS="$CLIENT_PIDS $!"
     fi
 done
 
 # Active wait for only server pid
-for client in clients_running
-    if $NUMBER_OF_CLIENTS != 0; then
-        #WAIT
-    else 
-        #AVISAR AL SERVER
+wait $CLIENT_PIDS
 
 # Kill server
 kill $SERVER_JOB_PID
