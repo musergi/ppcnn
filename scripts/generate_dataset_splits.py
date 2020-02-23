@@ -1,4 +1,5 @@
 """Loads the svhn and saves it in multiple small splits. Ready to train from each of the different clients."""
+import os
 import argparse
 import pickle
 import numpy as np
@@ -40,12 +41,12 @@ def generate_splits(arg_dict):
     return splits
 
 
-
 def save_splits(splits):
     """Pickles the splits."""
     for index, split in enumerate(splits):
         save_str = 'datasplit%04d.pickle' % index
-        with open(save_str, 'wb') as f:
+        save_path = os.path.join('datasets', save_str)
+        with open(save_path, 'wb') as f:
             pickle.dump(split, f)
 
 
