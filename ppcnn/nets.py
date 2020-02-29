@@ -1,3 +1,4 @@
+import datetime
 import tensorflow as tf 
 import threading
 
@@ -19,6 +20,11 @@ class Controller(object):
 
     def set_weights(self, weights):
         self.network.set_weights(weights)
+    
+    def checkpoint(self):
+        """Save network state to a file"""
+        save_path = f'checkpoint{int(datetime.datetime.now().timestamp())}.h5'
+        self.network.checkpoint(save_path)
 
 class NetworkMonitor:
     def __init__(self):
@@ -48,6 +54,10 @@ class NetworkMonitor:
         with self._lock:
             self.model.set_weights(weights)
         
+    def checkpoint(self, path: str):
+        """Save network state to a file"""
+        with self._lock:
+            self.model.save(path)
 
 def calculate_gradient(initial_weights, final_weights):
     delta = list()
