@@ -18,12 +18,14 @@ def on_connection(clientsocket):
 
 
 def run():
+    print('Starting server')
     nets.Controller().create_network()
 
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serversocket.bind((socket.gethostname(), coms.PORT))
     serversocket.listen(5)
-    
+    print('Server listening')
+
     #create file where we will write the ip
     with open(SERVER_INIT_FILE, 'w') as f:
         f.write(socket.gethostname()) 
