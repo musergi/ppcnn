@@ -9,13 +9,14 @@ def get_model(sock):
     net_json = sock.recv_str()
     model = tf.keras.models.model_from_json(net_json)
     weights = pickle.loads(sock.recv_data())
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     model.set_weights(weights)
     model.summary()
     return model
 
 def run(address, target):
     # Load dataset
-    with open(target) as f:
+    with open(target, 'rb') as f:
         dataset = pickle.load(f)
     
     # Create connection
