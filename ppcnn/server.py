@@ -37,13 +37,13 @@ def run():
         if host != '127.0.0.1':
             hostname = host
             break
-    serversocket.bind((socket.gethostname(), coms.PORT))
+    serversocket.bind((hostname, coms.PORT))
     serversocket.listen(5) # 5 represents queue size
     print('Server listening')
 
     # Create file and write the ip
     with open(SERVER_INIT_FILE, 'w') as f:
-        f.write(socket.gethostname()) 
+        f.write(hostname) 
 
     # Serve clients
     while True:
