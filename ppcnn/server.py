@@ -32,6 +32,11 @@ def run():
 
     # Open server socket
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    hostname = '0.0.0.0'
+    for host in socket.gethostbyname_ex(socket.gethostname())[-1]:
+        if host != '127.0.0.1':
+            hostname = host
+            break
     serversocket.bind((socket.gethostname(), coms.PORT))
     serversocket.listen(5) # 5 represents queue size
     print('Server listening')
