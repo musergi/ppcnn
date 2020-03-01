@@ -14,12 +14,22 @@ def get_model(sock):
     return model
 
 def run(address, target):
+    # Load dataset
+    with open(target) as f:
+        dataset = pickle.load(f)
+    
+    # Create connection
     clientsocket = socket.socket()
     clientsocket.connect((address, coms.PORT))
     sock = coms.CustomSocket(clientsocket)
     
     model = get_model(sock)
+    
     # Train network
+    x_train, y_train = dataset
+    model.fit(x_train, y_train, epochs=5)
+
+    # Send results (gradient)
     sock.send_data(pickle.dumps(model.get_weights()))
     if sock.recv_str() == 'OK':
         print('Successful exchange, closing conection')

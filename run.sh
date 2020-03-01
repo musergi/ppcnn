@@ -39,7 +39,6 @@ for node in `scontrol show hostnames $SLURM_JOB_NODELIST`; do
         srun --nodes=1 --nodelist $node --ntasks=1 $PYTHON -m ppcnn --address=$SERVER_ADDRESS --target=$TARGET &
         CLIENT_PIDS="$CLIENT_PIDS $!"
     fi
-    #Pq aqui no posem sleep?
 done
 
 # Active wait for only server pid
