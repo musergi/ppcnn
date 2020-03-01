@@ -30,7 +30,7 @@ class NetworkMonitor:
     def __init__(self):
         self._lock = threading.Lock()
         self.model = tf.keras.Sequential([
-            tf.keras.layers.Flatten(input_shape=(32, 32)),
+            tf.keras.layers.Flatten(input_shape=(32, 32, 3)),
             tf.keras.layers.Dense(1024, activation='relu'),
             tf.keras.layers.Dense(256, activation='relu'),
             tf.keras.layers.Dense(128, activation='relu'),
