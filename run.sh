@@ -7,10 +7,10 @@
 #SBATCH --wait-all-nodes=1
 
 # Paths
-#PYTHON="/scratch/nas/4/norma/venv/bin/python"
-PYTHON="python3"
+PYTHON="/scratch/nas/4/norma/venv/bin/python"
+#PYTHON="python3"
 SERVER_INIT_FILE=".sync/server_ready.out"
-TARGET='datasets/datasplit0000.pickle'
+TARGET="datasets/datasplit0000.pickle"
 
 # Search for host node and start server on it
 $PYTHON -m ppcnn --server &
