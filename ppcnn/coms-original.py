@@ -1,8 +1,8 @@
 import math
 import socket
-import FTP
 
-PORT = 4000
+
+PORT = 4000 #Donde se usa esto?
 BUFFER_SIZE = 4096
 
 
@@ -11,13 +11,8 @@ class CustomSocket:
         self.socket = socket
 
     def send_data(self, data):
-        FTP.storbinary(data, "fp.txt")
-
-        f= open("fp.txt","wb")
-        with open("fp.txt") as f
-            read_data = f.read()
-        f.closed
         fragment_count = math.ceil(len(data) / 4096) # Calculate fragment count
+        size_fragment = str(fragment_count).encode() # Convert to bytes
         size_fragment = b' ' * (BUFFER_SIZE - len(size_fragment)) + size_fragment # Add padding to fill buffer
         self.socket.send(size_fragment) # Send size
         # Send data
