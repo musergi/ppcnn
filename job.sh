@@ -5,4 +5,4 @@
 #SBATCH --error=/scratch/nas/4/norma/.log/stderr-%j.out
 PYTHON = /scratch/nas/4/norma/venv/bin/python
 
-PYTHON seq.py
+$PYTHON seq.py
