@@ -70,4 +70,4 @@ if __name__ == "__main__":
         model.set_weights(new_weights)
 
         # Save final model
-        model.save('final.h5')
+        model.save(MODEL_SAVE_PATH)
