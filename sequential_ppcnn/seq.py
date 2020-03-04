@@ -36,7 +36,7 @@ if __name__ == "__main__":
     deltas = []
     for i in range(NODES):
         #Load data
-        x_train, y_train = load_data('datasets/datasplit%04d.pickle' % i)
+        x_train, y_train = load_data('../datasets/datasplit%04d.pickle' % i)
 
         # Copy net
         iteration_model = tf.keras.models.load_model(MODEL_SAVE_PATH)
