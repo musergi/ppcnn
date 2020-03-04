@@ -3,7 +3,8 @@ import tensorflow as tf
 
 
 NODES = 5
-EPOCHS = 100
+MAX_EPOCHS = 100
+EPOCHS = 5
 MODEL_SAVE_PATH = 'temp.h5'
 
 
@@ -50,7 +51,7 @@ if __name__ == "__main__":
         iteration_deltas = save_gradient(initial_weights, final_weights)
         deltas.append(iteration_deltas)
 
-    # Calculate deltas mean
+    # Calculate gradient mean
     mean_deltas = []
     for layer in range(len(deltas[0])):
         mean_layer_deltas = None
