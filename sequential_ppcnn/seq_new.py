@@ -33,7 +33,7 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
-    for epochs in range(MAX_EPOCHS/EPOCHS):
+    for epochs in range(int(MAX_EPOCHS/EPOCHS)):
         deltas = []
         for i in range(NODES):
             #Load data
