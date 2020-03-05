@@ -4,7 +4,7 @@ import tensorflow as tf
 
 NODES = 5
 MAX_EPOCHS = 5
-EPOCHS = 1
+EPOCHS = 5
 MODEL_SAVE_PATH = 'temp.h5'
 
 
