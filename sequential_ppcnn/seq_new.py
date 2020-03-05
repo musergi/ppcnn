@@ -74,4 +74,5 @@ if __name__ == "__main__":
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
-        print(epochs + " model trained")
+        print(epochs)
+        print(" model trained")
