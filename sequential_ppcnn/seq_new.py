@@ -37,13 +37,16 @@ if __name__ == "__main__":
         deltas = []
         for i in range(NODES):
             #Load data
+            print("Loading data")
             x_train, y_train = load_data('../datasets/datasplit%04d.pickle' % i)
 
             # Copy net
+            print("Copying net")
             iteration_model = tf.keras.models.load_model(MODEL_SAVE_PATH)
             initial_weights = iteration_model.get_weights()
             
             # Train network
+            print("training network")
             iteration_model.fit(x_train, y_train, epochs=EPOCHS)
 
             # Save delta
@@ -71,3 +74,4 @@ if __name__ == "__main__":
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
+        print(epochs + " model trained")
