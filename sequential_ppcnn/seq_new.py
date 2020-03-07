@@ -3,7 +3,7 @@ import tensorflow as tf
 
 
 NODES = 5
-MAX_EPOCHS = 30
+ITERATIONS = 100
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp.h5'
 
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     del model
 
 
-    for epochs in range(int(MAX_EPOCHS/EPOCHS)):
+    for iteration in range(int(ITERATIONS)):
         deltas = []
         for i in range(NODES):
             
@@ -77,4 +77,4 @@ if __name__ == "__main__":
         # Save final model
         model.save(MODEL_SAVE_PATH)
         del model
-        print(epochs, " model trained")
+        print(iteration, " model trained")
