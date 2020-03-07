@@ -3,7 +3,7 @@ import tensorflow as tf
 
 
 NODES = 5
-ITERATIONS = 100
+ITERATIONS = 20
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp.h5'
 
@@ -21,13 +21,16 @@ def save_gradient(weights, gradient):
 
 if __name__ == "__main__":
     # Create network
-    model = tf.keras.models.Sequential([
-        tf.keras.layers.Flatten(input_shape=(32, 32, 3)),
-        tf.keras.layers.Dense(1024, activation='relu'),
-        tf.keras.layers.Dense(256, activation='relu'),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(10, activation='softmax')
-    ])
+    model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(256, kernel_size=(3, 3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+    tf.keras.layers.Conv2D(128, (3, 3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+    tf.keras.layers.Conv2D(64, (3,3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+    tf.keras.layers.Flatten(input_shape=(32, 32, 3)),
+    tf.keras.layers.Dense(10, activation='softmax')])
+
     model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
     model.summary()
     model.save(MODEL_SAVE_PATH)
