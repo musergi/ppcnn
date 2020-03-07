@@ -54,6 +54,7 @@ if __name__ == "__main__":
 
             # Save delta
             final_weights = iteration_model.get_weights()
+            model = tf.keras.models.load_model(MODEL_SAVE_PATH)
             model.set_weights(final_weights)
             
         # Save final model
