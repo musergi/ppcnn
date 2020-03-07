@@ -3,7 +3,7 @@ import tensorflow as tf
 
 
 NODES = 5
-MAX_EPOCHS = 5
+MAX_EPOCHS = 30
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp.h5'
 
@@ -28,15 +28,10 @@ if __name__ == "__main__":
         tf.keras.layers.Dense(128, activation='relu'),
         tf.keras.layers.Dense(10, activation='softmax')
     ])
-    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
     model.summary()
     model.save(MODEL_SAVE_PATH)
     del model
-
-    for i in range(NODES):
-        #Load data
-        print("Loading data")
-        x_train, y_train = load_data('../datasets/datasplit%04d.pickle' % i)
 
 
     for epochs in range(int(MAX_EPOCHS/EPOCHS)):
@@ -48,6 +43,10 @@ if __name__ == "__main__":
             iteration_model = tf.keras.models.load_model(MODEL_SAVE_PATH)
             initial_weights = iteration_model.get_weights()
             
+            # Load data
+            print("Loading data")
+            x_train, y_train = load_data('datasets/datasplit%04d.pickle' % i)
+
             # Train network
             print("training network")
             iteration_model.fit(x_train, y_train, epochs=EPOCHS)
