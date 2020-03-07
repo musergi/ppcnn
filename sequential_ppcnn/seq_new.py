@@ -3,8 +3,8 @@ import tensorflow as tf
 
 
 NODES = 5
-MAX_EPOCHS = 10
-EPOCHS = 10
+MAX_EPOCHS = 5
+EPOCHS = 1
 MODEL_SAVE_PATH = 'temp.h5'
 
 
@@ -33,13 +33,16 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
+    for i in range(NODES):
+        #Load data
+        print("Loading data")
+        x_train, y_train = load_data('../datasets/datasplit%04d.pickle' % i)
+
+
     for epochs in range(int(MAX_EPOCHS/EPOCHS)):
         deltas = []
         for i in range(NODES):
-            #Load data
-            print("Loading data")
-            x_train, y_train = load_data('../datasets/datasplit%04d.pickle' % i)
-
+            
             # Copy net
             print("Copying net")
             iteration_model = tf.keras.models.load_model(MODEL_SAVE_PATH)
