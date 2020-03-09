@@ -59,6 +59,9 @@ if __name__ == "__main__":
         # Calculate gradient max
         max_deltas = []
         for layer in range(len(deltas[0])):
+            #Recorrer peso a peso
+            for weight in 
+            #Recorrer nodos y hacer máximo de todos los nodos
             max_deltas.append(max(deltas[layer]))
 
         # Apply deltas
