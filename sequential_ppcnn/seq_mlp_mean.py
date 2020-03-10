@@ -2,7 +2,7 @@ import pickle
 import tensorflow as tf
 
 
-NODES = 5
+NODES = 15
 ITERATIONS = 100
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp.h5'
