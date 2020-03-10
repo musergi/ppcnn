@@ -80,7 +80,7 @@ if __name__ == "__main__":
         # Save final model
         model.save(MODEL_SAVE_PATH)
         
-        metrics = model.evaluate(load_data('datasets/test.pickle'))
+        metrics = model.evaluate(*load_data('datasets/test.pickle'))
         with open("sequential_ppcnn/training_log.csv", 'a') as f:
             f.write(','.join(metrics))
         del model
