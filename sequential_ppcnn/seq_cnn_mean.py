@@ -82,7 +82,7 @@ if __name__ == "__main__":
         
         metrics = model.evaluate(*load_data('datasets/test.pickle'))
         with open("sequential_ppcnn/training_log.csv", 'a') as f:
-            f.write(','.join(metrics))
+            f.write(','.join(list(metrics)))
         del model
         print(iteration, " model trained")
 
