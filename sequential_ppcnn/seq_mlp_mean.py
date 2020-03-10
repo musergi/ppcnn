@@ -45,7 +45,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split15/datasplit%04d.pickle' % i)
 
             # Train network
             print("training network")
@@ -76,5 +76,9 @@ if __name__ == "__main__":
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
+        
+        metrics = model.evaluate(load_data('datasets/test.pickle'))
+        with open("sequential_ppcnn/training_log.csv", 'a') as f:
+            f.write(','.join(metrics))
         del model
         print(iteration, " model trained")
