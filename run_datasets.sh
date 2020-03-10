@@ -9,4 +9,4 @@
 # Paths
 PYTHON="/scratch/nas/4/norma/venv/bin/python"
 
-$PYTHON scripts/generate_dataset_splits.py 14000 5
+$PYTHON scripts/generate_dataset_splits.py 5000 15
