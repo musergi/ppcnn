@@ -5,7 +5,7 @@ import tensorflow as tf
 NODES = 15
 ITERATIONS = 20
 EPOCHS = 1
-MODEL_SAVE_PATH = 'temp_cnn.h5'
+MODEL_SAVE_PATH = 'temp_cnn_rep.h5'
 
 
 def load_data(path):
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/split15/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % (i%3))
 
             # Train network
             print("training network")
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         model.save(MODEL_SAVE_PATH)
         
         metrics = model.evaluate(*test_data)
-        with open("sequential_ppcnn/training_log_cnn.csv", 'a') as f:
+        with open("sequential_ppcnn/training_log_cnn_rep.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
