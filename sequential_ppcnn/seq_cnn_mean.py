@@ -5,7 +5,7 @@ import tensorflow as tf
 NODES = 15
 ITERATIONS = 20
 EPOCHS = 1
-MODEL_SAVE_PATH = 'temp.h5'
+MODEL_SAVE_PATH = 'temp_cnn.h5'
 
 
 def load_data(path):
@@ -36,6 +36,7 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
+    test_data = load_data('datasets/test.pickle')
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -80,8 +81,8 @@ if __name__ == "__main__":
         # Save final model
         model.save(MODEL_SAVE_PATH)
         
-        metrics = model.evaluate(*load_data('datasets/test.pickle'))
-        with open("sequential_ppcnn/training_log.csv", 'a') as f:
+        metrics = model.evaluate(*test_data)
+        with open("sequential_ppcnn/training_log_cnn.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
