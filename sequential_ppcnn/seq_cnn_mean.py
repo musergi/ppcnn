@@ -49,7 +49,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % (i%3))
+            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % (i%5))
 
             # Train network
             print("training network")

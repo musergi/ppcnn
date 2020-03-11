@@ -2,7 +2,7 @@ import pickle
 import tensorflow as tf
 
 
-NODES = 15
+NODES = 5
 ITERATIONS = 100
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
