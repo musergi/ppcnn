@@ -18,6 +18,16 @@ def save_gradient(weights, gradient):
         iteration_deltas.append(final_layer_weights - inital_layer_weights)
     return iteration_deltas
 
+def get_max_delta(deltas):
+    max_deltas = []
+    deltas_count = len(deltas)     # Numero de deltas de distintos nodos
+    layer_count = len(deltas[0])  # Numero de capas
+    for layer_index in range(layer_count):
+        layer_max_delta = deltas[0][layer_index]
+        for node_index in range(1, deltas_count):
+            layer_max_delta = np.maximum(layer_max_delta, deltas[node_index][layer_index])
+        max_deltas.append(layer_max_delta)
+    return max_deltas
 
 if __name__ == "__main__":
     # Create network
@@ -60,14 +70,12 @@ if __name__ == "__main__":
             deltas.append(iteration_deltas)
 
         # Calculate gradient max
-        max_deltas = []
-        for layer in range(len(deltas[0])):
-            max_deltas.append(max(deltas[layer]))
+        max_deltas = get_max_delta(deltas)
 
         # Apply deltas
         model = tf.keras.models.load_model(MODEL_SAVE_PATH)
         new_weights = []
-        for layer_weights, layer_deltas in zip(model.get_weights(), mean_deltas):
+        for layer_weights, layer_deltas in zip(model.get_weights(), max_deltas):
             new_weights.append(layer_weights + layer_deltas)
         model.set_weights(new_weights)
 
