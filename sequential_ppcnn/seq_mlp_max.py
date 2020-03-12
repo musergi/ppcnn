@@ -5,7 +5,7 @@ import tensorflow as tf
 NODES = 5
 ITERATIONS = 100
 EPOCHS = 1
-MODEL_SAVE_PATH = 'temp.h5'
+MODEL_SAVE_PATH = 'temp_mlp.h5'
 
 
 def load_data(path):
@@ -33,6 +33,8 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
+    test_data = load_data('datasets/test.pickle')
+
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -45,7 +47,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % (i%5))
 
             # Train network
             print("training network")
@@ -57,21 +59,29 @@ if __name__ == "__main__":
             deltas.append(iteration_deltas)
 
         # Calculate gradient max
-        max_deltas = []
-        for layer in range(len(deltas[0])):
-            #Recorrer peso a peso
-            for weight in 
-            #Recorrer nodos y hacer máximo de todos los nodos
-            max_deltas.append(max(deltas[layer]))
+        def get_max_delta(deltas):
+            max_deltas = []
+            deltas_count = len(deltas)     # Numero de deltas de distintos nodos
+            layer_count = len(deltas[0])  # Numero de capas
+            for layer_index in range(layer_count):
+                layer_max_delta = deltas[0][layer_index]
+                for node_index in range(1, deltas_count):
+                    layer_max_delta = np.maximum(layer_max_delta, deltas[node_index][layer_index])
+                max_deltas.append(layer_max_delta)
+            return max_deltas
 
         # Apply deltas
         model = tf.keras.models.load_model(MODEL_SAVE_PATH)
         new_weights = []
-        for layer_weights, layer_deltas in zip(model.get_weights(), max_deltas):
+        for layer_weights, layer_deltas in zip(model.get_weights(), mean_deltas):
             new_weights.append(layer_weights + layer_deltas)
         model.set_weights(new_weights)
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
+        
+        metrics = model.evaluate(*test_data)
+        with open("sequential_ppcnn/training_log_mlp.csv", 'a') as f:
+            f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
