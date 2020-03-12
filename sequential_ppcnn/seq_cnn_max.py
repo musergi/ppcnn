@@ -46,6 +46,7 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
+    test_data = load_data('datasets/test.pickle')
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -58,7 +59,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % i)
 
             # Train network
             print("training network")
@@ -81,5 +82,9 @@ if __name__ == "__main__":
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
+        
+        metrics = model.evaluate(*test_data)
+        with open("sequential_ppcnn/training_log_cnn_rep.csv", 'a') as f:
+            f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
