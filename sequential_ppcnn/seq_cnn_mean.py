@@ -2,10 +2,10 @@ import pickle
 import tensorflow as tf
 
 
-NODES = 7
+NODES = 3
 ITERATIONS = 20
 EPOCHS = 1
-MODEL_SAVE_PATH = 'temp_cnn_rep.h5'
+MODEL_SAVE_PATH = 'temp_cnn.h5'
 
 
 def load_data(path):
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/split7/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split3/datasplit%04d.pickle' % i)
 
             # Train network
             print("training network")
