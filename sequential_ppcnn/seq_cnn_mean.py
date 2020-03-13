@@ -84,6 +84,7 @@ if __name__ == "__main__":
         metrics = model.evaluate(*test_data)
         with open("sequential_ppcnn/training_log_cnn_rep.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
+            f.write('\n')
         del model
         print(iteration, " model trained")
 
