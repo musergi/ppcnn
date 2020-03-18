@@ -1,7 +1,8 @@
 import numpy as np
 
-def get_median_delta(deltas):
-    return np.median(deltas, axis=0)
+def get_mean_delta(deltas):
+    return np.mean(deltas, axis=0)
+
 
 deltas_node1 = [
     np.array([[1, 1, 1], [1, 2, 1]]), # Layer 1
@@ -17,7 +18,7 @@ deltas_node3 = [
 ]
 deltas = [deltas_node1, deltas_node2, deltas_node3]
 
-median_delta = get_median_delta(deltas)
+mean_delta = get_mean_delta(deltas)
 
-print(median_delta[0])
-print(median_delta[1])
+print(mean_delta[0])
+print(mean_delta[1])
