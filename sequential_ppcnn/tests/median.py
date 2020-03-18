@@ -4,10 +4,10 @@ def get_median_delta(deltas):
     median_deltas = []
     deltas_count = len(deltas)     # Numero de deltas de distintos nodos
     layer_count = len(deltas[0])  # Numero de capas
+    deltas = np.array(deltas)   # Convert the array into a numpy array
     for layer_index in range(layer_count):
-        layer_median_delta = deltas[0][layer_index]
         for node_index in range(1, deltas_count):
-            layer_median_delta = np.median(layer_median_delta, axis=deltas[node_index][layer_index])
+            layer_median_delta = np.median(deltas[node_index][layer_index], axis=node_index)
         median_deltas.append(layer_median_delta)
     return median_deltas
 
