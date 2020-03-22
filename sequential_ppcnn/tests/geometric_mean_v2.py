@@ -5,6 +5,7 @@ def get_geometric_mean_delta(deltas, nodes):
     for layer in range(len(deltas[0])):
         gmean_layer_deltas = None
         for node_deltas in deltas:
+            #Si hay un cero despreciarlo e decrementar nodes
             if gmean_layer_deltas is None:
                 gmean_layer_deltas = node_deltas[layer] / len(deltas)
             else:
