@@ -1,7 +1,6 @@
 import pickle
 import tensorflow as tf
 import numpy as np
-from scipy import stats
 
 NODES = 5
 ITERATIONS = 20
@@ -20,7 +19,7 @@ def save_gradient(weights, gradient):
     return iteration_deltas
 
 def get_geometric_mean_delta(deltas):
-    return stats.gmean(deltas, axis=0) 
+    return np.power(np.prod(deltas, axis=0), 1/len(deltas)) 
 
 if __name__ == "__main__":
     # Create network
