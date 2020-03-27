@@ -5,4 +5,4 @@
 #SBATCH --error=/scratch/nas/4/norma/.log/stderr-%j.out
 PYTHON="/scratch/nas/4/norma/venv/bin/python"
 
-$PYTHON sequential_ppcnn/seq_mlp_gmean.py
+$PYTHON sequential_ppcnn/seq_mlp_median.py
