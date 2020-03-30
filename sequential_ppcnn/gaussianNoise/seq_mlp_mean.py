@@ -22,8 +22,8 @@ def save_gradient(weights, gradient):
 if __name__ == "__main__":
     # Create network
     model = tf.keras.Sequential([
-    tf.keras.layers.GaussianNoise(0.01),
-    tf.keras.layers.Flatten(input_shape=(32, 32, 3)),
+    tf.keras.layers.GaussianNoise(0.01, input_shape=(32, 32, 3)),
+    tf.keras.layers.Flatten(),
     tf.keras.layers.Dense(1024, activation='relu'),
     tf.keras.layers.Dense(256, activation='relu'),
     tf.keras.layers.Dense(128, activation='relu'),
