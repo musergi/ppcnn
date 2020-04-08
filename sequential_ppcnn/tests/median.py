@@ -1,23 +1,28 @@
 import numpy as np
 
 def get_median_delta(deltas):
-    median_deltas = []
+    """median_deltas = []
     deltas_count = len(deltas) # Numero de deltas de distintos nodos
     layer_count = len(deltas[0])  # Numero de capas
     for layer_index in range(layer_count):
-        """layer_median_delta = []
+        layer_median_delta = []
         layer_ordered_delta = deltas[:][layer_index]
         layer_median_delta = layer_ordered_delta.sort()
         median_deltas.append(layer_median_delta[len(layer_ordered_delta)/2])
         layer_ordered_delta = deltas[:][layer_index]
-        median_deltas.append(np.median(layer_ordered_delta))"""
-        
+        median_deltas.append(np.median(layer_ordered_delta))
+    
         layer_median_delta = []
         for node_index in range(1, deltas_count):
             layer_median_delta = np.median(deltas[node_index][layer_index])
             
         median_deltas.append(layer_median_delta)
-    return median_deltas
+    return median_deltas"""
+    node_count = len(deltas)
+    for i in range(node_count):
+        layers = deltas[node_count]
+        for j in range(len(layers)):
+            for k in range(len(weights))
 
 deltas_node1 = [
     np.array([[1, 1, 1], [1, 2, 1]]), # Layer 1
