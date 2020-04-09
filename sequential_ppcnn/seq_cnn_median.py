@@ -19,7 +19,16 @@ def save_gradient(weights, gradient):
     return iteration_deltas
 
 def get_median_delta(deltas):
-    return np.median(deltas, axis=0)
+    median_deltas = []
+    
+    nodes = range(0, len(deltas))
+    layers = range(0, len(deltas[0]))
+    for layer in layers:
+        layer_weights = list()
+        for node in nodes:
+            layer_weights.append(deltas[node][layer])
+        median_deltas.append(np.median(layer_weights, axis=0))
+    return median_deltas
 
 if __name__ == "__main__":
     # Create network
