@@ -2,7 +2,7 @@ import pickle
 import tensorflow as tf
 import numpy as np
 
-NODES = 5
+NODES = 7
 ITERATIONS = 100
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % (i%5))
+            x_train, y_train = load_data('datasets/split7/datasplit%04d.pickle' % (i%5))
 
             # Train network
             print("training network")
