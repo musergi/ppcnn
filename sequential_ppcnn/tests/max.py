@@ -2,12 +2,13 @@ import numpy as np
 
 def get_max_delta(deltas):
     max_deltas = []
-    deltas_count = len(deltas)     # Numero de deltas de distintos nodos
-    layer_count = len(deltas[0])  # Numero de capas
-    for layer_index in range(layer_count):
-        layer_max_delta = deltas[0][layer_index]
-        for node_index in range(1, deltas_count):
-            layer_max_delta = np.maximum(layer_max_delta, deltas[node_index][layer_index])
+    nodes = range(0, len(deltas))
+    layers = range(0, len(deltas[0]))
+    for layer in layers:
+        layer_max_delta = deltas[0][layer]
+        for node in nodes:
+            layer_max_delta = np.maximum(layer_max_delta, deltas[node][layer])
+        
         max_deltas.append(layer_max_delta)
     return max_deltas
 
