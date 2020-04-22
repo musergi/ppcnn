@@ -1,6 +1,7 @@
 import pickle
 import tensorflow as tf
 import numpy as np
+import random
 
 NODES = 5
 ITERATIONS = 100
