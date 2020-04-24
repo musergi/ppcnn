@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
 
         #Define threshold and apply it
-        thresh_delta = get_thresh_delta
+        thresh_delta = get_thresh_delta(deltas)
 
         # Apply deltas
         model = tf.keras.models.load_model(MODEL_SAVE_PATH)
