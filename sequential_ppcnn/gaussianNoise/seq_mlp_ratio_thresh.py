@@ -4,9 +4,9 @@ import numpy as np
 import random
 
 NODES = 5
-ITERATIONS = 20
+ITERATIONS = 100
 EPOCHS = 1
-MODEL_SAVE_PATH = 'temp.h5'
+MODEL_SAVE_PATH = 'temp_mlp.h5'
 
 
 def load_data(path):
@@ -19,10 +19,8 @@ def save_gradient(weights, gradient):
         iteration_deltas.append(final_layer_weights - inital_layer_weights)
     return iteration_deltas
 
-def get_thresh_delta(delta):
-    median_deltas = []
-    max_deltas = []
-    thresh_deltas = []
+def get_ratio_thresh_delta(delta):
+    ratio_thresh_deltas = []
     nodes = range(0, len(deltas))
     layers = range(0, len(deltas[0]))
     for layer in layers:
@@ -31,29 +29,28 @@ def get_thresh_delta(delta):
         for node in nodes:
             layer_weights.append(deltas[node][layer])
             layer_max_delta = np.maximum(layer_max_delta, deltas[node][layer])
-        thresh_deltas.append(random.uniform(np.median(layer_weights, axis=0), layer_max_delta))
-    return thresh_deltas
-
+        #Define a random number between median and a 50% between median and maximun
+        layer_median_delta = np.median(layer_weights, axis=0)
+        layer_difference_delta = (layer_max_delta - layer_median_delta)/2
+        ratio_thresh_deltas.append(random.uniform(layer_median_delta, layer_median_delta + layer_difference_delta))
+    return ratio_thresh_deltas
 
 if __name__ == "__main__":
     # Create network
     model = tf.keras.Sequential([
-            tf.keras.layers.GaussianNoise(0.01, input_shape=(32, 32, 3)),
-            tf.keras.layers.Conv2D(256, kernel_size=(3, 3), activation='relu'),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-            tf.keras.layers.Conv2D(128, (3, 3), activation='relu'),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-            tf.keras.layers.Conv2D(64, (3,3), activation='relu'),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-            tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(10, activation='softmax')])
-
+    tf.keras.layers.Flatten(input_shape=(32, 32, 3)),
+    tf.keras.layers.Dense(1024, activation='relu'),
+    tf.keras.layers.Dense(256, activation='relu'),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
     model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
     model.summary()
     model.save(MODEL_SAVE_PATH)
     del model
 
     test_data = load_data('datasets/test.pickle')
+
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -66,7 +63,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split5/datasplit%04d.pickle' % (i%5))
 
             # Train network
             print("training network")
@@ -77,14 +74,18 @@ if __name__ == "__main__":
             iteration_deltas = save_gradient(initial_weights, final_weights)
             deltas.append(iteration_deltas)
 
+        
+        #Calculate gradient min
+        #min_delta = get_min_delta(deltas)
 
         #Define threshold and apply it
-        thresh_delta = get_thresh_delta(deltas)
+        ratio_thresh_delta = get_ratio_thresh_delta(deltas)
 
+        
         # Apply deltas
         model = tf.keras.models.load_model(MODEL_SAVE_PATH)
         new_weights = []
-        for layer_weights, layer_deltas in zip(model.get_weights(), thresh_delta):
+        for layer_weights, layer_deltas in zip(model.get_weights(), ratio_thresh_delta):
             new_weights.append(layer_weights + layer_deltas)
         model.set_weights(new_weights)
 
@@ -92,7 +93,7 @@ if __name__ == "__main__":
         model.save(MODEL_SAVE_PATH)
         
         metrics = model.evaluate(*test_data)
-        with open("sequential_ppcnn/training_log_cnn_rep.csv", 'a') as f:
+        with open("sequential_ppcnn/training_log_mlp.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")

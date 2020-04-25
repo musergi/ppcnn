@@ -19,10 +19,8 @@ def save_gradient(weights, gradient):
         iteration_deltas.append(final_layer_weights - inital_layer_weights)
     return iteration_deltas
 
-def get_thresh_delta(delta):
-    median_deltas = []
-    max_deltas = []
-    thresh_deltas = []
+def get_ratio_thresh_delta(delta):
+    ratio_thresh_deltas = []
     nodes = range(0, len(deltas))
     layers = range(0, len(deltas[0]))
     for layer in layers:
@@ -31,8 +29,11 @@ def get_thresh_delta(delta):
         for node in nodes:
             layer_weights.append(deltas[node][layer])
             layer_max_delta = np.maximum(layer_max_delta, deltas[node][layer])
-        thresh_deltas.append(random.uniform(np.median(layer_weights, axis=0), layer_max_delta))
-    return thresh_deltas
+        #Define a random number between median and a 50% between median and maximun
+        layer_median_delta = np.median(layer_weights, axis=0)
+        layer_difference_delta = (layer_max_delta - layer_median_delta)/2
+        ratio_thresh_deltas.append(random.uniform(layer_median_delta, layer_median_delta + layer_difference_delta))
+    return ratio_thresh_deltas
 
 
 if __name__ == "__main__":
@@ -79,12 +80,12 @@ if __name__ == "__main__":
 
 
         #Define threshold and apply it
-        thresh_delta = get_thresh_delta(deltas)
+        ratio_thresh_delta = get_ratio_thresh_delta(deltas)
 
         # Apply deltas
         model = tf.keras.models.load_model(MODEL_SAVE_PATH)
         new_weights = []
-        for layer_weights, layer_deltas in zip(model.get_weights(), thresh_delta):
+        for layer_weights, layer_deltas in zip(model.get_weights(), ratio_thresh_delta):
             new_weights.append(layer_weights + layer_deltas)
         model.set_weights(new_weights)
 
