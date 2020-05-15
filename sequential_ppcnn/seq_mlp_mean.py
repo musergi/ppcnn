@@ -33,7 +33,7 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
-    test_data = load_data('datasets/test.pickle')
+    test_data = load_data('datasets/validation/validation_dataset.pickle')
 
 
     for iteration in range(int(ITERATIONS)):

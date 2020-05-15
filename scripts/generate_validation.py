@@ -44,7 +44,7 @@ def generate_splits(arg_dict):
 def save_splits(splits):
     """Pickles the splits."""
     for index, split in enumerate(splits):
-        save_str = 'validation_dataset'
+        save_str = 'validation_dataset.pickle'
         save_path = os.path.join('datasets/validation', save_str)
         with open(save_path, 'wb') as f:
             pickle.dump(split, f)
