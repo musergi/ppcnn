@@ -2,7 +2,7 @@ import pickle
 import tensorflow as tf
 
 
-NODES = 7
+NODES = 3
 ITERATIONS = 20
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_cnn.h5'
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
-    test_data = load_data('datasets/test.pickle')
+    test_data = load_data('datasets/validation/validation_dataset.pickle')
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -50,7 +50,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/split7/datasplit%04d.pickle' % i)
+            x_train, y_train = load_data('datasets/split3/datasplit%04d.pickle' % i)
 
             # Train network
             print("training network")
